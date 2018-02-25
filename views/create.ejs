@@ -1,0 +1,41 @@
+<%- include("components/top.inc.ejs", {type: 'post'}) %>
+<form method="post" class="pub-article">
+  <div class="input-item">
+    <input type="text" id="title" name="title" placeholder="请输入标题">
+  </div>
+  <div class="con-item">
+    <textarea name="content" id="con" cols="30" rows="10" placeholder="请输入内容"></textarea>
+  </div>
+  <div class="submit" style="cursor: pointer">提交文章</div>
+</form>
+<script>
+  $('.submit').click(function() {
+    var title = $('#title').val()
+    var content = $('#con').val()
+    if(!title.trim() || !content.trim()) {
+      alert('标题和内容都是必须的')
+    }
+    $.ajax({
+      url: '/article/create',
+      type: 'post',
+      data: {
+        title: title,
+        content: content
+      },
+      dataType: 'json',
+      cache: false,
+      success: function(res) {
+        console.log(res)
+        if(!res.code) {
+          setTimeout(function(){
+            window.location.href = '/article/post'
+          }, 500)  
+        }
+      },
+      error: function() {
+        alert('ajax错误')
+      }
+    })
+  })
+</script>
+<% include components/foot.inc.ejs %>

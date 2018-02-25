@@ -1,0 +1,87 @@
+<%- include("components/top.inc.ejs", {type: 'all'}) %>
+  <div>
+    <ul class="posts">
+      <% posts.map(item => { %>
+        <li>
+          <div class="con">
+            <a href="post/<%= item.id %>">
+              <div class="title">
+                <img src="/images/<%= item.avatar %>" alt="">
+                <span><%= item.title %></span>
+                <span><%= item.moment %></span>
+              </div>
+              <div class="content">
+                <%- item.md %>
+              </div>
+            </a>
+          </div>
+          <div class="author">
+            <span title="<%= item.name %>"><a href="post?author=<%= item.name %>">作者: <%= item.name %></a></span>
+            <span>浏览量: <%= item.pv %></span>
+            <span>评论数: <%= item.comments %></span>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+    <div class="pagination">
+      <ul class="clearfix">
+        <% for(var i = 0; i < postsMaxPage; i++) { %>
+          <% if(i === 0) { %>
+            <span class="active"><%= i+1 %></span>
+          <% } else { %>
+            <span><%= i+1 %></span>
+          <% } %>              
+        <% } %> 
+      </ul>
+    </div>  
+  </div>
+  <script>
+      // 全部文章分页
+      $('.pagination span').click(function() {
+        $(this).addClass('active').siblings().removeClass('active')
+        var page = $(this).text(),
+            commentList = ''
+        $.ajax({
+          url:location.pathname + '/postspage',
+          type: 'post',
+          data: {page: page},
+          cache: false,
+          dataType: 'json',
+          success: function(res) {
+            if(!res.code) {
+              console.log(res.msg)
+              $('.posts').html('')
+              $.each(res.msg, function(index, item) {
+                // console.log(item)
+                commentList += '<li>' +
+                                '<div class="con">' +
+                                  '<a href="post/' + item.id + '">' +
+                                    '<div class="title">' +
+                                      '<img src="/images/' + item.avatar + '" alt="">' +
+                                      '<span>' + item.title + '</span>' +
+                                      '<span>' + item.moment + '</span>' +
+                                    '</div>' +
+                                    '<div class="content">' +
+                                      item.md +
+                                    '</div>' +
+                                  '</a>' +
+                                '</div>' +
+                                '<div class="author">' +
+                                  '<span title="' + item.name + '"><a href="post?author=' + item.name + '">作者: ' + item.name + '</a></span>' +
+                                  '<span>浏览量: ' + item.pv + '</span>' +
+                                  '<span>评论数: ' + item.comments + '</span>' +
+                                '</div>' +
+                              '</li>'
+              })
+              $('.posts').append(commentList)
+            } else {
+              console.log(res.msg)
+            }
+          },
+          error: function() {
+            console.log('ajax错误')
+          }
+        })
+      })
+  </script>
+<% include components/foot.inc.ejs %>

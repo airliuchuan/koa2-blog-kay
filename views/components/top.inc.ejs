@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <link rel="stylesheet" href="/css/index.css">
+  <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+      // 登出
+      $('.signout').click(function() {
+        $.ajax({
+          url: '/user/signout',
+          type: 'get',
+          cache: false,
+          dataType: 'json',
+          success: function(res) {
+            console.log(res)
+            if(!res.code) {
+              window.location.href = '/article/post'
+            }
+          },
+          error: function(err) {
+            console.log('ajax错误')
+          }
+        })
+      })
+      $('.content img').parent('p').css('text-aglin', 'center')
+    })
+   
+    window.onload = function() {
+      // 处理拖拽过来的图片的函数
+      function insertImg(imgFile, imgName) {
+        var mdImg = ''
+        var reader = new FileReader()
+        if(!reader) {
+          alert('浏览器不支持拖拽上传图片')
+          return
+        }
+        reader.onload = function() {
+          mdImg = '![' + imgName + '](' + this.result + ' "' + imgName + '")'
+          // console.log(mdImg)
+          con.value += mdImg
+        }
+        reader.onerror = function() {
+          alert('上传失败')
+        }
+        reader.readAsDataURL(imgFile)
+        
+      }
+      // 拖入图片
+      var con = document.getElementById('con')
+      if(con) {
+        con.addEventListener('dragenter', function() {
+          var tip = '<p class="tip">释放鼠标, 添加图片</p>'
+          $(this).after(tip)
+        }, false)
+        con.addEventListener('dragleave', function() {
+            $('.tip').remove()
+        }, false)
+        con.addEventListener('dragover', function(e) {
+          e.preventDefault()
+        }, false)
+        con.addEventListener('drop', function(e){
+          e.preventDefault()
+          $('.tip').remove()
+          console.log(e.dataTransfer.files[0])
+          fileType = e.dataTransfer.files[0].type.split('/')[0]
+          if(fileType !== 'image') {
+            alert('请上传图片文件')
+            return
+          }
+          var imgName = e.dataTransfer.files[0].name
+          var imgFile = e.dataTransfer.files[0] 
+          insertImg(imgFile, imgName)
+        }, false)
+      } else {
+        return
+      }
+      
+    }
+   
+  </script>
+</head>
+<body>
+  <div class="header clearfix">
+    <% if(session.user) { %> 
+      <div class="h-right">
+        <% if (type == 'all'){ %>
+          <span><a href="/article/post" class="active">全部文章</a></span>
+        <% } else { %>
+          <span><a href="/article/post">全部文章</a></span>
+        <% } %>
+        <% if (type == 'post'){ %>
+          <span><a href="/article/create" class="active">发布文章</a></span>
+        <% } else { %>
+          <span><a href="/article/create">发布文章</a></span>
+        <% } %>
+        <% if (type == 'mine'){ %>
+          <span><a href="/article/post?author=<%= session.user %>" class="active">我的文章</a></span>
+        <% } else { %>
+          <span><a href="/article/post?author=<%= session.user %>">我的文章</a></span>
+        <% } %>
+        
+        <span class="signout">登出</span>
+      </div>
+      <div class="h-left">
+          <span>你好 <%= session.user %></span>
+        </div>
+    <% } else { %>
+      <div class="h-right">
+          <% if (type == 'all'){ %>
+            <span><a href="/article/post" class="active">全部文章</a></span>
+          <% } else { %>
+            <span><a href="/article/post">全部文章</a></span>
+          <% } %>
+          <% if (type == 'signup'){ %>
+            <span><a href="/user/signup" class="active">注册</a></span>
+          <% } else { %>
+            <span><a href="/user/signup">注册</a></span>
+          <% } %>
+          <% if (type == 'signin'){ %>
+            <span><a href="/user/signin" class="active">登陆</a></span>
+          <% } else { %>
+            <span><a href="/user/signin">登陆</a></span>
+          <% } %>
+          
+        </div> 
+        <div class="h-left">
+          <span>欢迎登录注册</span>
+        </div>
+    <% } %>
+  </div>

@@ -1,0 +1,188 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+a:hover {
+  color: #5fb878;
+}
+.signout:hover {
+  color: #5fb878;
+}
+.active {
+  color: #5fb878;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+body {
+  background: #fff;
+}
+li {
+  list-style: none;
+}
+.header {
+  width: 800px;
+  margin: 0 auto;
+  height: 40px;
+  background: #f2f2f2;
+  border-bottom: 1px solid #ccc;
+  line-height: 40px;
+}
+.h-left {
+  padding-left: 30px;
+}
+.h-right {
+  float: right;
+  margin-right: 30px;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix:after {
+  display: table;
+  content: '';
+  clear: both;
+}
+.author {
+  padding: 10px;
+}
+.posts {
+  width: 800px;
+  margin: 20px auto;
+}
+.posts li {
+  border: 1px solid #ddd;
+  list-style: none;
+  margin-bottom: 10px;
+}
+.posts li:hover {
+  background: #f2f2f2;
+}
+.posts li:hover pre {
+  border: 1px solid #000;
+}
+.con a {
+  text-decoration: none;
+  color: #000;
+}
+.title {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+.title img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.title span {
+  vertical-align: middle;
+}
+.content {
+  padding: 20px;
+}
+pre {
+  border: 1px solid #ccc;
+  padding: 20px 10px;
+  overflow-x: scroll;
+}
+p img{
+  width: 60%;
+}
+.comment {
+  width: 800px;
+  margin: 20px auto 50px;
+}
+.comment-list {
+  margin-top: 25px;
+  position: relative;
+}
+.comment-list>li {
+  border: 1px solid #ddd;
+}
+.c-r {
+  margin-left: 60px;
+}
+.pagination {
+  text-align: center
+}
+.pagination li {
+  float: left;
+  margin-right: 10px;
+}
+.log-wrap {
+  width: 800px;
+  margin: 40px auto;
+}
+.log-wrap form {
+  width: 50%;
+  margin: 0 auto;
+}
+.input-item {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  overflow: hidden;
+  padding-left: 20px;
+}
+.input-item:hover {
+  border: 1px solid #03a9f4;
+}
+.input-item input{
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+}
+#avatar {
+  opacity: 0;
+}
+#submit,.submit {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  color: #fff;
+  background: #5fb878;
+}
+.ava-label {
+  margin-top: 13px;
+  color: #757575;
+}
+.pub-article {
+  width: 800px;
+  margin: 40px auto;
+}
+.con-item {
+  width: 100%;
+  height: 180px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+.con-item:hover {
+  border: 1px solid #03a9f4;
+}
+.comment-detail,.con-item textarea {
+  padding: 10px;
+  width: 100%;
+  border: 0;
+  resize: none;
+  outline: none;
+  color: #757575;
+  font-size: 15px;
+}
+.del-com  {
+  margin: 15px 10px 0 0;
+}

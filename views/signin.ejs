@@ -1,0 +1,57 @@
+<%- include("components/top.inc.ejs", {type: 'signin'}) %>
+  <div class="log-wrap">
+    <form class="form" method="post">
+      <div class="input-item">
+        <input type="text" name="name" placeholder="请输入用户名">
+      </div>
+      <div class="input-item">
+        <input type="password" name="pass" placeholder="请输入密码">
+      </div>     
+      <div class="submit" style="cursor: pointer">登录</div>   
+    </form>
+  </div>
+  
+  <script>
+    $('.submit').click(function() {
+      console.log('submit')
+      // console.log($('.form').serialize())
+      var username = $('input[name=name]').val().trim(),
+          password = $('input[name=pass]').val().trim()
+      if(!username) {
+        alert('请输入用户名')
+      } else if(!/^([A-Za-z]|[\u4E00-\u9FA5])+$/.test(username)) {
+        alert('用户名只能为数字和汉字, 不能超过32个字符')
+      } else if(!password) {
+        alert('请输入密码')
+      } else if(!/(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{5,12}/.test(password)) {
+        alert('请输入6-12位的密码,只能是数字和字母')
+      } else {
+        console.log('ajax')
+        $.ajax({
+          url: '/user/signin',
+          data: {
+            name: username,
+            pass: password
+          },
+          cache: false,
+          type: 'post',
+          dataType: 'json',
+          success: function(res) {
+            if(res.code) {
+              $('input[name=name]').val('')
+              $('input[name=pass]').val('')
+              alert('用户名或密码不正确')
+              return
+            }
+            setTimeout(function(){
+              window.location.href = '/article/post'
+            }, 500)
+          },
+          error: function() {
+            alert('ajax异常')
+          }
+        })
+      }
+    })
+  </script>
+<% include components/foot.inc.ejs %>

@@ -1,0 +1,101 @@
+<%- include("components/top.inc.ejs", {type: 'signup'}) %>
+  <div class="log-wrap">
+    <form class="form" method="post">
+      <div class="input-item">
+        <input type="text" name="name" placeholder="请输入用户名">
+      </div>
+      <div class="input-item">
+        <input type="password" name="pass" placeholder="请确认密码">
+      </div>
+      <div class="input-item">
+        <input type="password" name="checkpass" placeholder="请验证密码">
+      </div>
+      <div class="input-item">
+        <p class="ava-label">点击上传头像</p>
+        <input type="file" name="avatar" id="avatar">
+      </div>
+      <input type="hidden" id="avatarVal">
+      <img alt="预览头像" alt="预览图片" class="preview" style="width:100px;height:100px;display:none;">
+      <div class="submit" style="cursor: pointer">注册</div>  
+    </form>
+  </div>
+  
+  <script>
+
+    $('#avatar').change(function() {
+      if(!this.files[0]) {
+        return
+      } 
+      var file = this.files[0]
+      var reader = new FileReader()
+      console.log(reader)
+      if(!reader) {
+        this.value = ''
+        return 
+      }
+      // console.log(file.size,file.type)
+      // if (file.size >= 1024 * 1024 / 2) {
+      // 	fade("请上传小于512kb的图片!")
+      // 	return 
+      // }
+      if(!/image/g.test(file.type)) {
+        alert('请上传图片')
+        $('#avatorVal').val('')
+        $('.preview').attr('src', '')
+      }
+      reader.onload = function(e) {
+        // console.log(e.target)
+        $('.preview').show()
+        $('.preview').attr('src', e.target.result)
+        $('#avatarVal').val(e.target.result)
+      }
+      // 没有readAsDataURL() 是没有办法完成reader.onload
+      reader.readAsDataURL(file)
+    })
+
+    $('.submit').click(function() {
+      console.log('submit')
+      // console.log($('.form').serialize())
+      var username = $('input[name=name]').val().trim(),
+          password = $('input[name=pass]').val().trim(),
+          checkPass = $('input[name=checkpass]').val().trim(),
+          avatarVal = $('#avatarVal').val();
+      if(!username) {
+        alert('请输入用户名')
+      } else if(!/^([A-Za-z]|[\u4E00-\u9FA5])+$/.test(username)) {
+        alert('用户名只能为数字和汉字, 不能超过32个字符')
+      } else if(!password) {
+        alert('请输入密码')
+      } else if(!/(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{5,12}/.test(password)) {
+        alert('请输入6-12位的密码,只能是数字和字母')
+      } else if(!checkPass) {
+        alert('请验证密码')
+      } else if(password !== checkPass) {
+        alert('两次输入的密码不一致, 请重新输入')
+      } else if (!avatarVal) {
+        alert('请上传图片')
+      } else {
+        console.log('ajax')
+        $.ajax({
+          url: '/user/signup',
+          data: {
+            name: username,
+            pass: password,
+            checkpass: checkPass,
+            avatar: avatarVal
+          },
+          cache: false,
+          type: 'post',
+          dataType: 'json',
+          success: function(res) {
+            console.log(res)
+          },
+          error: function() {
+            alert('ajax异常')
+          }
+
+        })
+      }
+    })
+  </script>
+<% include components/foot.inc.ejs %>

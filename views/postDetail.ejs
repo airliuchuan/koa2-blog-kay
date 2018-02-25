@@ -1,0 +1,183 @@
+<%- include("components/top.inc.ejs", {type: ''}) %>
+  <div>
+    <ul class="posts">
+        <li>
+          <div class="con">
+              <div class="title">
+                <img src="/images/<%= detailPost.avatar %>" alt="">
+                <span><%= detailPost.title %></span>
+                <span><%= detailPost.moment %></span>
+              </div>
+              <div class="content">
+                <%- detailPost.md %>
+              </div>
+          </div>
+          <div class="author">
+            <span title="<%= detailPost.name %>"><a href="post?author=<%= detailPost.name %>">作者: <%= detailPost.name %></a></span>
+            <span>浏览量: <%= detailPost.pv %></span>
+            <span>评论数: <%= detailPost.comments %></span>
+          </div>
+          <% if(session.user && session.user === detailPost.name) { %>
+            <div class="editor">
+              <a href="<%= detailPost.id %>/edit">编辑</a>
+              <a href="javascript:;" id="del">删除</a>
+            </div>
+         <% } %>
+          
+        </li>
+    </ul>
+  </div>
+  <div class="comment">
+      <% if(session.user) { %>
+        <form method="post">
+            <div class="con-item">
+              <textarea name="comment" id="con" cols="30" rows="10" placeholder="请输入评论"></textarea>
+            </div>
+          
+          <div style="surcor: pointer;" id="submit">发表评论</div>
+        </form>
+      <% } else { %>
+        <P style="text-align: center; margin-bottom: 20px;">登录之后才可以评论哦\(^o^)/~ <a href="/user/signin">去登陆</a> </P>
+      <% } %>
+      
+      <ul class="comment-list">
+        <% comments.map(item => { %>
+           <li class="clearfix">
+             <% if(session.user && session.user === item.name) { %>
+               <div class="del-com fr">
+                <a href="javascript:delete_comment(<%= item.id %>);">删除</a>
+              </div>
+             <% } %>
+            
+            <div class="c-l fl">
+              <img style="width: 50px" src="/images/<%= item.avatar %>" alt="">
+            </div>
+            <div class="c-r">
+              <p><%= item.name %></p>
+              <p><%- item.content %></p>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+      <div class="pagination">
+        <ul class="clearfix">
+          <% for(var i = 0; i < commentsPages; i++) { %>
+            <% if(i === 0) { %>
+              <span class="active"><%= i+1 %></span>
+            <% } else { %>
+              <span><%= i+1 %></span>
+            <% } %>              
+          <% } %> 
+        </ul>
+      </div>  
+    </div>
+    <script>
+      // 评论分页
+      $('.pagination span').click(function() {
+        $(this).addClass('active').siblings().removeClass('active')
+        var page = $(this).text(),
+            commentList = ''
+        $.ajax({
+          url:location.pathname + '/commentpage',
+          type: 'post',
+          data: {page: page},
+          cache: false,
+          dataType: 'json',
+          success: function(res) {
+            if(!res.code) {
+              console.log(res.msg)
+              $('.comment-list').html('')
+              $.each(res.msg, function(index, item) {
+                // console.log(item)
+                commentList += '<li class="clearfix">' +
+                                '<% if(session.user && session.user === ' + item.name + ') { %>' +
+                                  '<div class="del-com fr">' +
+                                    '<a href="javascript:delete_comment(' + item.id + ');">删除</a>' +
+                                  '</div>' +
+                                '<% } %>' +
+                                '<div class="c-l fl">' + 
+                                  '<img style="width: 50px" src="/images/' + item.avatar + '" alt="">' + 
+                                '</div>' +
+                                '<div class="c-r">' +
+                                  '<p>' +  item.name + '</p>' +
+                                  '<p>' + item.content + '</p>' +
+                                '</div>' +
+                              '</li>'
+              })
+              $('.comment-list').append(commentList)
+            } else {
+              console.log(res.msg)
+            }
+          },
+          error: function() {
+            console.log('ajax错误')
+          }
+        })
+      })
+     
+      // 提交评论
+      var submitOnce = true // 评论只能提交一次
+      $('#submit').click(function() {
+        if(!submitOnce) return
+        submitOnce = false
+        if(!$('#con').val()) {
+          alert('评论不能为空')
+        } else {
+          $.ajax({
+            url: '/article/' + '<%= detailPost.id %>',
+            type: 'post',
+            data: {
+              content: $('#con').val()
+            },
+            cache: false,
+            dataType: 'json',
+            success: function(res) {
+              if(!res.code) {
+                console.log(res.msg)
+                setTimeout(function(){
+                  window.location.reload()
+                }, 500)
+              }
+            },
+            error: function() {
+              alert('ajax错误')
+            }
+          })
+        }
+      })
+      // 删除文章
+      $('#del').click(function(){
+        $.ajax({
+          url: location.pathname + '/del',
+          dataType: 'json',
+          cache: false,
+          type: 'post',
+          success: function(res) {
+            if(!res.code) {
+              console.log(res.msg)
+              window.location.href = '/article/post'
+            } else {
+              console.log(res.msg)
+            }
+          }
+        })
+      })
+      //删除某条评论
+      function delete_comment(id) {
+        $.ajax({
+          url: location.pathname + '/comment/' + id + '/del',
+          dataType: 'json',
+          type: 'post',
+          cache: false,
+          success: function(res) {
+            if(!res.code) {
+              console.log(res.msg)
+              window.location.reload()
+            } else {
+              console.log(res.msg)
+            }
+          }
+        })
+      }
+    </script>
+<% include components/foot.inc.ejs %>

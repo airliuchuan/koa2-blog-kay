@@ -1,0 +1,37 @@
+<%- include("components/top.inc.ejs", {type: ''}) %>
+<form method="post">
+  标题: <input type="text" id="title" name="title" value="<%= post.title %>"><br>
+  文章: <textarea name="content" id="con" cols="30" rows="10"><%= post.content %></textarea>
+  <div class="submit" style="cursor: pointer">修改文章</div>
+</form>
+<script>
+  $('.submit').click(function() {
+    var title = $('#title').val()
+    var content = $('#con').val()
+    if(!title.trim() || !content.trim()) {
+      alert('标题和内容都是必须的')
+    }
+    $.ajax({
+      url: location.pathname,
+      type: 'post',
+      data: {
+        title: title,
+        content: content
+      },
+      dataType: 'json',
+      cache: false,
+      success: function(res) {
+        console.log(res)
+        if(!res.code) {
+          setTimeout(function(){
+            window.location.href = '/article/post'
+          }, 500)  
+        }
+      },
+      error: function() {
+        alert('ajax错误')
+      }
+    })
+  })
+</script>
+<% include components/foot.inc.ejs %>
