@@ -1,13 +1,11 @@
-# Koa2-blog
+# koa-blog
 node+koa2+mysql (欢迎star)
 
 实现了用户注册登录,发布文章, 编辑文章, 删除文章, 发布评论, 删除评论, 以及编辑和删除的权限, mysql数据库的创建, sql语句Promise封装, markdown编辑, 分页, 上传头像, 支持图片拖动添加, 使用最新的async await 配合Promise, 简直是享受
 
 
-教程 [Node+Koa2+Mysql 搭建简易博客](http://www.wclimb.site/2017/07/12/Node-Koa2-Mysql-%E6%90%AD%E5%BB%BA%E7%AE%80%E6%98%93%E5%8D%9A%E5%AE%A2/) 
-
 ### 创建数据库 
-安装mysql
+安装mysql: 官网下载最新版本
 
 启动mysql
 ```
@@ -75,30 +73,8 @@ $ npm run dev(运行项目)
 ```
 $ npm test(测试项目)
 ```
-### 演示
+### 目录结构
 
-![](http://oswpupqu5.bkt.clouddn.com/blog1.gif)
-
-### 注册
-
-![](http://oswpupqu5.bkt.clouddn.com/signup1.png)
-
-### 登陆
-
-![](http://oswpupqu5.bkt.clouddn.com/signin1.png)
-
-### 发表文章
-
-![](http://oswpupqu5.bkt.clouddn.com/create1.png)
-
-### 文章详情
-
-![](http://oswpupqu5.bkt.clouddn.com/postcontent1.png)
-
-### 文章列表
-
-![](http://oswpupqu5.bkt.clouddn.com/posts1.png)
-
-### 个人文章页以及正常编辑删除文章和评论
+![](http://oxn3qjcft.bkt.clouddn.com/%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.jpg)
 
 
