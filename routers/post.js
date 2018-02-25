@@ -144,14 +144,14 @@ router.post('/create', async (ctx, next) => {
       post_time = moment().format('YYYY-MM-DD HH:mm:ss'),
       avatar
   // 现在使用markdown不需要单独转译
-  let newContent = content.replace(/<"'>/g, (target) => {
-    return {
-      '<': '&lt;',
-      '"': '&quot;',
-      '>': '&gt;',
-      "'": '&#39;'
-    }
-  })
+  // let newContent = content.replace(/<"'>/g, (target) => {
+  //   return {
+  //     '<': '&lt;',
+  //     '"': '&quot;',
+  //     '>': '&gt;',
+  //     "'": '&#39;'
+  //   }
+  // })
   let newTitle = title.replace(/<'">/g, (target) => {
     return {
       '<': '&lt;',

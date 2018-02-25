@@ -56,7 +56,7 @@ $ use nodesql;
 * postid：文章id
 
 ```
-$ git clone https://github.com/wclimb/Koa2-blog.git
+$ git clone https://github.com/airliuchuan/koa2-blog-kay.git
 ```
 ```
 $ cd Koa2-blog
