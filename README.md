@@ -75,6 +75,6 @@ $ npm test(测试项目)
 ```
 ### 目录结构
 
-![](http://oxn3qjcft.bkt.clouddn.com/%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.jpg)
+![](http://oxn3qjcft.bkt.clouddn.com/mulu.jpg)
 
 
