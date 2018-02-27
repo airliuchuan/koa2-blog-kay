@@ -1,13 +1,15 @@
 const Router = require('koa-router')
 const userModel = require('../libs/mysql')
 const md5 = require('md5')
-const config = require('../config/default')
+const config = require('../config')
+const checkNotLogin = require('../meddleware/checklog').checkNotLogin
 
 const router = new Router({
   prefix: '/user'
 })
 
 router.get('/signin', async (ctx, next) => {
+  checkNotLogin(ctx)
   await ctx.render('signin.ejs', {
     session: ctx.session
   })

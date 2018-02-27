@@ -1,16 +1,18 @@
 const Router = require('koa-router')
 const userModel = require('../libs/mysql.js')
-const config = require('../config/default')
+const config = require('../config')
 const md5 = require('md5')
 const fs = require('fs')
 const moment = require('moment')
 const path = require('path')
+const checkNotLogin = require('../meddleware/checklog').checkNotLogin
 
 const router = new Router({
   prefix: '/user'
 })
 
 router.get('/signup', async (ctx, next) => {
+  checkNotLogin(ctx)
   await ctx.render('signup.ejs', {
     session: ctx.session
   })
@@ -72,6 +74,7 @@ router.post('/signup', async (ctx, next) => {
             .then(res => {
               console.log('注册成功')
               // ctx.session.user = user.name
+              
               ctx.body = {
                 code: 0,
                 msg: '注册成功'

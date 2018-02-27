@@ -3,6 +3,7 @@ const moment = require('moment')
 const userModel = require('../libs/mysql')
 const Markdown = require('markdown-it')
 const md = new Markdown()
+const checkLogin = require('../meddleware/checklog').checkLogin
 
 const router = new Router({
   prefix: '/article'
@@ -61,7 +62,7 @@ router.get('/post', async (ctx, next) => {
         console.error(err)
         ctx.body = {
           code: 1,
-          msg: '查询全部文章失败'
+          msg: '查询全部文章失败'
         }
       })
     await ctx.render('post.ejs', { // 为什么一定要加await
@@ -128,6 +129,7 @@ router.get('/post/:postid', async (ctx, next) => {
 
 // 获取发布页
 router.get('/create', async (ctx, next) => {
+  checkLogin(ctx)
   await ctx.render('create.ejs', {
     session: ctx.session
   })

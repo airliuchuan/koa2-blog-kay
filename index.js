@@ -7,7 +7,7 @@ const views = require('koa-views')
 const mysqlStore = require('koa-mysql-session')
 const router = require('koa-router')
 const path = require('path')
-const config =require('./config/default')
+const config =require('./config')
 const app =new Koa()
 app.listen(config.port)
 

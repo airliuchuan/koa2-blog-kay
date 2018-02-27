@@ -88,7 +88,11 @@
           type: 'post',
           dataType: 'json',
           success: function(res) {
-            console.log(res)
+            if(res.code) {
+              alert(res.msg)
+            } else {
+              window.location.href = '/user/signin'
+            }
           },
           error: function() {
             alert('ajax异常')

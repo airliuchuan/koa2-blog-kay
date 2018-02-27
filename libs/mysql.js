@@ -1,5 +1,5 @@
 const mysql = require('mysql')
-const config = require('../config/default')
+const config = require('../config')
 const dbCfg = config.database
 // 1.链接数据池
 const pool = mysql.createPool({
