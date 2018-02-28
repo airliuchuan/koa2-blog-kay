@@ -1,5 +1,5 @@
 # koa-blog
-node+koa2+mysql (欢迎star)(预览地址)[http://node.moneng.org/]
+node+koa2+mysql (欢迎star)[预览地址](http://node.moneng.org/)
 
 
 实现了用户注册登录,发布文章, 编辑文章, 删除文章, 发布评论, 删除评论, 以及编辑和删除的权限, mysql数据库的创建, sql语句Promise封装, markdown编辑, 分页, 上传头像, 支持图片拖动添加, 使用最新的async await 配合Promise, 简直是享受
