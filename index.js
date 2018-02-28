@@ -42,6 +42,7 @@ app.use(bodyParser({
 }))
 
 //配置路由
+app.use(require('./routers/index').routes())
 app.use(require('./routers/signup').routes())
 app.use(require('./routers/signin').routes())
 app.use(require('./routers/post').routes())

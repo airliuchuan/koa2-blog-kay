@@ -1,7 +1,11 @@
 <%- include("components/top.inc.ejs", {type: ''}) %>
-<form method="post">
-  标题: <input type="text" id="title" name="title" value="<%= post.title %>"><br>
-  文章: <textarea name="content" id="con" cols="30" rows="10"><%= post.content %></textarea>
+<form method="post" class="pub-article">
+  <div class="input-item">
+    <input type="text" id="title" name="title" value="<%= post.title %>" placeholder="请输入修改的标题">
+  </div>
+  <div class="con-item">
+    <textarea name="content" id="con" cols="30" rows="10" placeholder="请输入修改内容"><%= post.content %></textarea>
+  </div>
   <div class="submit" style="cursor: pointer">修改文章</div>
 </form>
 <script>
