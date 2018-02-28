@@ -1,5 +1,6 @@
 # koa-blog
-node+koa2+mysql (欢迎star)
+node+koa2+mysql (欢迎star)(预览地址)[http://node.moneng.org/]
+
 
 实现了用户注册登录,发布文章, 编辑文章, 删除文章, 发布评论, 删除评论, 以及编辑和删除的权限, mysql数据库的创建, sql语句Promise封装, markdown编辑, 分页, 上传头像, 支持图片拖动添加, 使用最新的async await 配合Promise, 简直是享受
 
@@ -82,5 +83,9 @@ $ npm test(测试项目)
 3. 处理了, mysql数据库存入中文'?????'问题, 设置mysql默认编码格式
 4. 调整注册页面, 上传头像按钮样式
 5. 使用NODE_ENV区分生产环境和开发环境两种配置文件
+### 2018.2.28
+1. 编辑文章页面样式
+2. 解决nginx反向代理响应慢问题
+3. 添加预览地址
 
 
